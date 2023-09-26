@@ -1,62 +1,31 @@
-# hello_world
+# Aiken hello_world contract
 
-Write validators in the `validators` folder, and supporting functions in the `lib` folder using `.ak` as a file extension.
+How to run this project:
 
-For example, as `validators/always_true.ak`
+Step 1: Download dependencies
 
-```gleam
-validator {
-  fn spend(_datum: Data, _redeemer: Data, _context: Data) -> Bool {
-    True
-  }
-}
 ```
-
-Validators are named after their purpose, so one of:
-
-- `spent`
-- `mint`
-- `withdraw`
-- `publish`
-
-## Building
-
-```sh
-aiken build
-```
-
-## Testing
-
-You can write tests in any module using the `test` keyword. For example:
-
-```gleam
-test foo() {
-  1 + 1 == 2
-}
-```
-
-To run all tests, simply do:
-
-```sh
 aiken check
 ```
 
-To run only tests matching the string `foo`, do:
+Step 2:  Build contract
 
-```sh
-aiken check -m foo
+```
+aiken build
 ```
 
-## Documentation
+Step 3: Generate a private key and an address using Lucid
 
-If you're writing a library, you might want to generate an HTML documentation for it.
-
-Use:
-
-```sh
-aiken docs
+```
+deno run --allow-net --allow-write generate-credentials.ts
 ```
 
-## Resources
+Step 4: Run lock scripts
+```
+deno run --allow-net --allow-read --allow-env hello_world-lock.ts
+```
 
-Find more on the [Aiken's user manual](https://aiken-lang.org).
+Step 5: Run unlocking scripts
+```
+deno run --allow-net --allow-read --allow-env hello_world-unlock.ts <TX_HASH_OF_LOCK_TRANSACTION>
+```
